@@ -8,6 +8,12 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
+/**
+ * Implements a kind of map that provides fixed values that are initialized as late as possible.
+ *
+ * @see Builder#build()
+ * @see #builder()
+ */
 public class Late {
 
     private Map<Key, Supplier> suppliers = new ConcurrentHashMap<>();
@@ -20,6 +26,9 @@ public class Late {
         }));
     }
 
+    /**
+     * Provides a new {@link Builder}.
+     */
     public static Builder builder() {
         return new Builder();
     }
@@ -35,6 +44,9 @@ public class Late {
                 .orElseThrow(() -> new IllegalArgumentException("Unknown key: " + key));
     }
 
+    /**
+     * A builder for instances of {@link Late}.
+     */
     public static class Builder {
 
         private Map<Key, Supplier> initials = new HashMap<>();

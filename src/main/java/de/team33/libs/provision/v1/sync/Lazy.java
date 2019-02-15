@@ -1,4 +1,4 @@
-package de.team33.libs.provision.v1;
+package de.team33.libs.provision.v1.sync;
 
 import java.util.function.Supplier;
 
@@ -41,7 +41,7 @@ public class Lazy<T> implements Supplier<T> {
         }
 
         @Override
-        public T get() {
+        public synchronized T get() {
             if (backing == this) {
                 backing = new Final<>(initial.get());
             }

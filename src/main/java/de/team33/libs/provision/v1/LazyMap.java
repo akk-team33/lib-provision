@@ -43,6 +43,9 @@ public class LazyMap<C> {
         });
     }
 
+    /**
+     * Resets the underlying map by completely emptying it.
+     */
     public final void reset() {
         map.clear();
     }

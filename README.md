@@ -1,5 +1,9 @@
 # lib-provision
 
+## Requires
+
+    Java 8 or later
+
 ## pom.xml
 
     <dependency>

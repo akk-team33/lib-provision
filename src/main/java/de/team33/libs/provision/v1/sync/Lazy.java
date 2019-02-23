@@ -26,14 +26,7 @@ public class Lazy<T> implements Supplier<T> {
      * <p>Returns the value that has been determined using the
      * {@linkplain #Lazy(Supplier) initially specified supplier}.</p>
      *
-     * <p>Ideally, the result is always the same, once determined value.
-     * However, if multiple concurrent calls from different threads are executed in parallel, it may
-     * happen that the {@linkplain #Lazy(Supplier) initially specified supplier} is called multiple times
-     * before one of the results is effectively available for further calls. In this case, the result remains
-     * consistent, as long as the results of the supplier are consistent.</p>
-     *
-     * <p>When it comes to preventing this in any case, the {@linkplain de.team33.libs.provision.v1.sync.Lazy
-     * synchronized lazy implementation} should be used instead.</p>
+     * <p>The result is always the same, once determined value..</p>
      */
     @Override
     public T get() {

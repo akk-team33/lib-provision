@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.team33.libs</groupId>
     <artifactId>lib-provision</artifactId>
-    <version>8.1.1</version>
+    <version>8.1.2</version>
     <packaging>jar</packaging>
 
     <name>Team33 Provision Library</name>
@@ -95,6 +95,8 @@
                 <configuration>
                     <show>protected</show>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <failOnError>false</failOnError>
+                    <failOnWarnings>false</failOnWarnings>
                 </configuration>
                 <executions>
                     <execution>

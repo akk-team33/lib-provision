@@ -12,12 +12,13 @@ import static java.util.stream.Collectors.toMap;
  * Abstracts a kind of container with variable but well-typed properties that can be referenced using
  * {@linkplain Key special keys}.
  *
- * <p>To get an instance use {@link Builder#build()} or {@link Builder#prepare()} and {@link Supplier#get()}</p>
+ * <p>To get an instance use {@link Builder#build()} or
+ * {@link Builder#prepare()} and {@link Supplier#get()}</p>
  */
 public interface Features {
 
     /**
-     * Retrieves a new {@link FeatureMap.Builder}.
+     * Retrieves a new {@link Builder}.
      */
     static Builder builder() {
         return new Builder();
@@ -64,7 +65,8 @@ public interface Features {
 
 
         /**
-         * Prepares new instances of {@link Features}. Use {@link Supplier#get()} to finally get such an instance.
+         * Prepares new instances of {@link Features}.
+         * Use {@link Supplier#get()} to finally get such an instance.
          */
         public final Supplier<Features> prepare() {
             final Map<Key, Supplier> stage = unmodifiableMap(new HashMap<>(map));
@@ -72,7 +74,7 @@ public interface Features {
         }
 
         /**
-         * Builds a new instance of {@link FeatureMap}.
+         * Builds a new instance of {@link Features}.
          */
         public final Features build() {
             return prepare().get();

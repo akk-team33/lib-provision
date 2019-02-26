@@ -16,9 +16,7 @@ import java.util.function.Function;
 public class Cache<P, K, R> {
 
     private final Map<K, R> cache = new ConcurrentHashMap<>(0);
-
     private final Function<P, K> toKey;
-
     private final Function<P, R> toResult;
 
     /**

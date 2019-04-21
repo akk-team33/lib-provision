@@ -9,5 +9,5 @@
     <dependency>
       <groupId>de.team33.libs</groupId>
       <artifactId>lib-provision</artifactId>
-      <version>8.1.2</version>
+      <version>8.2.1</version>
     </dependency>

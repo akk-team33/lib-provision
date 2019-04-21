@@ -8,8 +8,6 @@ import java.util.function.Supplier;
  *
  * <p>This implementation ensures that the {@linkplain #Lazy(Supplier) initially specified supplier}
  * is called up to a maximum of once, even for concurrent accesses.</p>
- *
- * @see de.team33.libs.provision.v1.Lazy
  */
 public class Lazy<T> implements Supplier<T> {
 

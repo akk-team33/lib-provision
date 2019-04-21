@@ -13,8 +13,8 @@ import java.util.function.Function;
  */
 public class LazyMap<C> {
 
-    private final Map<Function, Object> map = new ConcurrentHashMap<>(0);
     private final C context;
+    private final Map<Object, Object> map = new ConcurrentHashMap<>(0);
 
     /**
      * Initializes a new instance giving a context.

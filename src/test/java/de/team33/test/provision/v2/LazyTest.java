@@ -1,6 +1,6 @@
-package de.team33.test.provision.v1;
+package de.team33.test.provision.v2;
 
-import de.team33.libs.provision.v1.Lazy;
+import de.team33.libs.provision.v2.Lazy;
 import org.junit.Test;
 
 import java.util.Date;
@@ -49,6 +49,6 @@ public class LazyTest {
             thread.join();
         }
 
-        assertTrue(1 < counter);
+        assertEquals(1, counter);
     }
 }

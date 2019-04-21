@@ -1,6 +1,6 @@
-package de.team33.test.provision.v1;
+package de.team33.test.provision.v2;
 
-import de.team33.libs.provision.v1.LazyMap;
+import de.team33.libs.provision.v2.LazyMap;
 import org.junit.Test;
 
 import java.util.Date;

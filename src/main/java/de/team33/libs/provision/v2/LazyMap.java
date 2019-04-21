@@ -1,4 +1,4 @@
-package de.team33.libs.provision.v1;
+package de.team33.libs.provision.v2;
 
 import java.util.Map;
 import java.util.Optional;

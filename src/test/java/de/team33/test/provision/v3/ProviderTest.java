@@ -1,18 +1,18 @@
 package de.team33.test.provision.v3;
 
-import de.team33.libs.provision.v3.LazyMap;
-import de.team33.libs.provision.v3.LazyMap.Key;
+import de.team33.libs.provision.v3.Provider;
+import de.team33.libs.provision.v3.Provider.Key;
 import org.junit.Test;
 
 import java.util.Date;
 
 import static org.junit.Assert.*;
 
-public class LazyMapTest {
+public class ProviderTest {
 
-    private static final Key<LazyMapTest, Date> DATE0 = LazyMapTest::newDate0;
+    private static final Key<ProviderTest, Date> DATE0 = ProviderTest::newDate0;
 
-    private final LazyMap<LazyMapTest> lazy = new LazyMap<>(this);
+    private final Provider<ProviderTest> lazy = new Provider<>(this);
     private final long time0 = System.currentTimeMillis();
 
     private int time0Count = 0;

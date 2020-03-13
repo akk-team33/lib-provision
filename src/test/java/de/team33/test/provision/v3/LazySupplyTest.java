@@ -1,18 +1,18 @@
 package de.team33.test.provision.v3;
 
-import de.team33.libs.provision.v3.Provider;
-import de.team33.libs.provision.v3.Provider.Key;
+import de.team33.libs.provision.v3.LazySupply;
+import de.team33.libs.provision.v3.LazySupply.Key;
 import org.junit.Test;
 
 import java.util.Date;
 
 import static org.junit.Assert.*;
 
-public class ProviderTest {
+public class LazySupplyTest {
 
-    private static final Key<ProviderTest, Date> DATE0 = ProviderTest::newDate0;
+    private static final Key<LazySupplyTest, Date> DATE0 = LazySupplyTest::newDate0;
 
-    private final Provider<ProviderTest> lazy = new Provider<>(this);
+    private final LazySupply<LazySupplyTest> lazy = new LazySupply<>(this);
     private final long time0 = System.currentTimeMillis();
 
     private int time0Count = 0;

@@ -3,13 +3,21 @@ package de.team33.libs.provision.v3;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 /**
- * Represents a construct that can get and hold certain values of unique types within a given context.
- * It is used for the late initialization of values that are basically constant in the context but should only be
- * calculated once and only when they are actually needed (lazy initialization).
+ * <p>Implements a supply of virtually fixed values of individual types within a certain context.
+ * These values are only actually determined when they are accessed for the first time (lazy initialization).</p>
  *
- * @param <C> A context type to be used to initialize the provided values.
+ * <p>Individual values are accessed similarly to a map via associated {@link Key Keys}, which in this case also define the
+ * initialization of the respective value.</p>
+ *
+ * <p>This implementation cannot prevent the initialization code of a value from being executed multiple times in the
+ * event of concurrent access from different threads.
+ * However, it ensures that an affected value and the supply as a whole remain consistent as long as the
+ * initialization code provides consistent values.</p>
+ *
+ * @param <C> A context type to which the provided values belong.
  */
 public class LazySupply<C> {
 
@@ -17,25 +25,16 @@ public class LazySupply<C> {
     private final Map<Object, Object> map = new ConcurrentHashMap<>(0);
 
     /**
-     * Initializes a new instance with the intended context.
+     * Initializes a new instance giving the intended context.
      */
     public LazySupply(final C context) {
         this.context = context;
     }
 
     /**
-     * <p>Returns the value associated with the given {@link Key Key}.</p>
+     * Returns the value associated with the given {@link Key Key}.
      *
-     * <p>When this happens for the first time, the {@link Key#init(Object) Key's initialisation method} is performed
-     * and the result is associated with the {@link Key Key}. From the second time, the result of the association with
-     * the key is found and returned directly without calling the initialization method again.</p>
-     *
-     * <p>If multiple concurrent calls occur in parallel from different threads, it may happen that the
-     * {@link Key#init(Object) Key's initialisation method} is called multiple times before one of the results is
-     * effectively associated with the {@link Key Key}. In that case, this instance still remains consistent as
-     * long as the method's results are consistent over several calls.</p>
-     *
-     * @throws EnvelopeException if the {@link Key#init(Object) Key's initialisation method} causes a checked exception.
+     * @throws EnvelopeException when the {@link Key#init(Object) Key's initialisation method} causes a checked exception.
      */
     public final <R> R get(final Key<? super C, R> key) {
         //noinspection unchecked
@@ -53,8 +52,8 @@ public class LazySupply<C> {
     }
 
     /**
-     * Resets this instance so that any {@link Key#init(Object) Key's initialisation method} will be called again the
-     * next time it is applied to {@link #get(Key) get(Key)}.
+     * Resets this instance so that any {@linkplain Key#init(Object) Key's initialisation method} will be called again the
+     * next time it is applied to {@link #get(Key)}.
      */
     public final void reset() {
         map.clear();
@@ -62,9 +61,9 @@ public class LazySupply<C> {
 
     /**
      * <p>Abstracts a key for access to a certain value in a {@link LazySupply} as well as a kind of function for the
-     * first calculation of that value.</p>
+     * initialisation of that value.</p>
      *
-     * <p>Such a key will typically have identity semantics.</p>
+     * <p>An instance will typically be defined {@code static final} and have identity semantics.</p>
      *
      * @param <C> A context type to be used to initialize the provided values.
      * @param <R> The type of the represented value.

@@ -3,62 +3,39 @@ package de.team33.libs.provision.v2;
 import java.util.function.Supplier;
 
 /**
- * <p>Implements a supplier that provides a fixed value that is determined once but as late as possible,
- * and only if needed at all.</p>
+ * <p>Implements a {@link Supplier} that provides a virtually fixed value.
+ * This value is only actually determined when it is accessed for the first time.</p>
  *
- * <p>This implementation ensures that the {@linkplain #Lazy(Supplier) initially specified supplier}
- * is called up to a maximum of once, even for concurrent accesses.</p>
+ * <p>This implementation ensures that the {@linkplain #Lazy(Supplier) originally defined initialization code}
+ * is called at most once, even when there is concurrent access from multiple threads.</p>
  */
 public class Lazy<T> implements Supplier<T> {
 
     private Supplier<T> backing;
 
     /**
-     * Initializes a new instance based on a supplier describing how the represented value will be determined.
+     * Initializes a new instance giving a supplier that defines the intended initialization of the represented value.
      */
     public Lazy(final Supplier<T> initial) {
-        this.backing = new Initial(initial);
+        this.backing = new Supplier<T>() {
+            @Override
+            public synchronized T get() {
+                if (backing == this) {
+                    final T result = initial.get();
+                    backing = () -> result;
+                }
+                return backing.get();
+            }
+        };
     }
 
     /**
-     * <p>Returns the value that has been determined using the
-     * {@linkplain #Lazy(Supplier) initially specified supplier}.</p>
-     *
-     * <p>The result is always the same, once determined value..</p>
+     * <p>Returns the represented value.</p>
+     * <p>That value was determined once with the first access using the
+     * {@linkplain #Lazy(Supplier) originally defined initialization code}.</p>
      */
     @Override
     public T get() {
         return backing.get();
-    }
-
-    private static class Final<T> implements Supplier<T> {
-
-        private final T result;
-
-        private Final(final T result) {
-            this.result = result;
-        }
-
-        @Override
-        public T get() {
-            return result;
-        }
-    }
-
-    private class Initial implements Supplier<T> {
-
-        private final Supplier<T> initial;
-
-        private Initial(final Supplier<T> initial) {
-            this.initial = initial;
-        }
-
-        @Override
-        public synchronized T get() {
-            if (backing == this) {
-                backing = new Final<>(initial.get());
-            }
-            return backing.get();
-        }
     }
 }

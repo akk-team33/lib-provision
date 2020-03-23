@@ -56,6 +56,6 @@ public class LazySupplyTest {
             thread.join();
         }
 
-        assertTrue(1 < time0Count);
+        assertTrue("time0Count: " + time0Count, 1 < time0Count);
     }
 }
